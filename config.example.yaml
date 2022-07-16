@@ -1,0 +1,12 @@
+app:
+  env: "local"
+  db_type: "IN_MEMORY"
+  port: 5001
+  read_timeout: 5000
+  write_timeout: 5000
+mysql:
+  host: "localhost"
+  port: 3306
+  username: "root"
+  password: "password"
+  db_name: "database_name"
