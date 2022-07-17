@@ -54,6 +54,11 @@ You might want to run the service in your local machine. This backend service ru
 
     This is the generated admin password that can be used to access the dashboard (create & disabled invitation token).
 
+## Testing
+
+You can run **unit testing** using GoMock by running `make test`. Currently, the unit test only cover package `helper` and `service`.
+
+Currently there is no **integration testing** yet on this project.
 
 ## API Documentation
 

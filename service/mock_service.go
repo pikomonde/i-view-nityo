@@ -4,143 +4,143 @@
 // Package service is a generated GoMock package.
 package service
 
-// import (
-// 	reflect "reflect"
+import (
+	reflect "reflect"
 
-// 	gomock "github.com/golang/mock/gomock"
-// 	model "github.com/pikomonde/i-view-nityo/model"
-// )
+	gomock "github.com/golang/mock/gomock"
+	model "github.com/pikomonde/i-view-nityo/model"
+)
 
-// // MockLogin is a mock of Login interface.
-// type MockLogin struct {
-// 	ctrl     *gomock.Controller
-// 	recorder *MockLoginMockRecorder
-// }
+// MockLogin is a mock of Login interface.
+type MockLogin struct {
+	ctrl     *gomock.Controller
+	recorder *MockLoginMockRecorder
+}
 
-// // MockLoginMockRecorder is the mock recorder for MockLogin.
-// type MockLoginMockRecorder struct {
-// 	mock *MockLogin
-// }
+// MockLoginMockRecorder is the mock recorder for MockLogin.
+type MockLoginMockRecorder struct {
+	mock *MockLogin
+}
 
-// // NewMockLogin creates a new mock instance.
-// func NewMockLogin(ctrl *gomock.Controller) *MockLogin {
-// 	mock := &MockLogin{ctrl: ctrl}
-// 	mock.recorder = &MockLoginMockRecorder{mock}
-// 	return mock
-// }
+// NewMockLogin creates a new mock instance.
+func NewMockLogin(ctrl *gomock.Controller) *MockLogin {
+	mock := &MockLogin{ctrl: ctrl}
+	mock.recorder = &MockLoginMockRecorder{mock}
+	return mock
+}
 
-// // EXPECT returns an object that allows the caller to indicate expected use.
-// func (m *MockLogin) EXPECT() *MockLoginMockRecorder {
-// 	return m.recorder
-// }
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockLogin) EXPECT() *MockLoginMockRecorder {
+	return m.recorder
+}
 
-// // LoginByInvitationToken mocks base method.
-// func (m *MockLogin) LoginByInvitationToken(invitationToken string) (string, error) {
-// 	m.ctrl.T.Helper()
-// 	ret := m.ctrl.Call(m, "LoginByInvitationToken", invitationToken)
-// 	ret0, _ := ret[0].(string)
-// 	ret1, _ := ret[1].(error)
-// 	return ret0, ret1
-// }
+// LoginByInvitationToken mocks base method.
+func (m *MockLogin) LoginByInvitationToken(invitationToken string) (string, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "LoginByInvitationToken", invitationToken)
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
 
-// // LoginByInvitationToken indicates an expected call of LoginByInvitationToken.
-// func (mr *MockLoginMockRecorder) LoginByInvitationToken(invitationToken interface{}) *gomock.Call {
-// 	mr.mock.ctrl.T.Helper()
-// 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LoginByInvitationToken", reflect.TypeOf((*MockLogin)(nil).LoginByInvitationToken), invitationToken)
-// }
+// LoginByInvitationToken indicates an expected call of LoginByInvitationToken.
+func (mr *MockLoginMockRecorder) LoginByInvitationToken(invitationToken interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LoginByInvitationToken", reflect.TypeOf((*MockLogin)(nil).LoginByInvitationToken), invitationToken)
+}
 
-// // LoginByUsernamePassword mocks base method.
-// func (m *MockLogin) LoginByUsernamePassword(username, password string) (string, error) {
-// 	m.ctrl.T.Helper()
-// 	ret := m.ctrl.Call(m, "LoginByUsernamePassword", username, password)
-// 	ret0, _ := ret[0].(string)
-// 	ret1, _ := ret[1].(error)
-// 	return ret0, ret1
-// }
+// LoginByUsernamePassword mocks base method.
+func (m *MockLogin) LoginByUsernamePassword(username, password string) (string, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "LoginByUsernamePassword", username, password)
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
 
-// // LoginByUsernamePassword indicates an expected call of LoginByUsernamePassword.
-// func (mr *MockLoginMockRecorder) LoginByUsernamePassword(username, password interface{}) *gomock.Call {
-// 	mr.mock.ctrl.T.Helper()
-// 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LoginByUsernamePassword", reflect.TypeOf((*MockLogin)(nil).LoginByUsernamePassword), username, password)
-// }
+// LoginByUsernamePassword indicates an expected call of LoginByUsernamePassword.
+func (mr *MockLoginMockRecorder) LoginByUsernamePassword(username, password interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LoginByUsernamePassword", reflect.TypeOf((*MockLogin)(nil).LoginByUsernamePassword), username, password)
+}
 
-// // RegisterAdminIfNotExist mocks base method.
-// func (m *MockLogin) RegisterAdminIfNotExist() error {
-// 	m.ctrl.T.Helper()
-// 	ret := m.ctrl.Call(m, "RegisterAdminIfNotExist")
-// 	ret0, _ := ret[0].(error)
-// 	return ret0
-// }
+// RegisterAdminIfNotExist mocks base method.
+func (m *MockLogin) RegisterAdminIfNotExist() error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "RegisterAdminIfNotExist")
+	ret0, _ := ret[0].(error)
+	return ret0
+}
 
-// // RegisterAdminIfNotExist indicates an expected call of RegisterAdminIfNotExist.
-// func (mr *MockLoginMockRecorder) RegisterAdminIfNotExist() *gomock.Call {
-// 	mr.mock.ctrl.T.Helper()
-// 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RegisterAdminIfNotExist", reflect.TypeOf((*MockLogin)(nil).RegisterAdminIfNotExist))
-// }
+// RegisterAdminIfNotExist indicates an expected call of RegisterAdminIfNotExist.
+func (mr *MockLoginMockRecorder) RegisterAdminIfNotExist() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RegisterAdminIfNotExist", reflect.TypeOf((*MockLogin)(nil).RegisterAdminIfNotExist))
+}
 
-// // MockInvitation is a mock of Invitation interface.
-// type MockInvitation struct {
-// 	ctrl     *gomock.Controller
-// 	recorder *MockInvitationMockRecorder
-// }
+// MockInvitation is a mock of Invitation interface.
+type MockInvitation struct {
+	ctrl     *gomock.Controller
+	recorder *MockInvitationMockRecorder
+}
 
-// // MockInvitationMockRecorder is the mock recorder for MockInvitation.
-// type MockInvitationMockRecorder struct {
-// 	mock *MockInvitation
-// }
+// MockInvitationMockRecorder is the mock recorder for MockInvitation.
+type MockInvitationMockRecorder struct {
+	mock *MockInvitation
+}
 
-// // NewMockInvitation creates a new mock instance.
-// func NewMockInvitation(ctrl *gomock.Controller) *MockInvitation {
-// 	mock := &MockInvitation{ctrl: ctrl}
-// 	mock.recorder = &MockInvitationMockRecorder{mock}
-// 	return mock
-// }
+// NewMockInvitation creates a new mock instance.
+func NewMockInvitation(ctrl *gomock.Controller) *MockInvitation {
+	mock := &MockInvitation{ctrl: ctrl}
+	mock.recorder = &MockInvitationMockRecorder{mock}
+	return mock
+}
 
-// // EXPECT returns an object that allows the caller to indicate expected use.
-// func (m *MockInvitation) EXPECT() *MockInvitationMockRecorder {
-// 	return m.recorder
-// }
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockInvitation) EXPECT() *MockInvitationMockRecorder {
+	return m.recorder
+}
 
-// // CreateInvitation mocks base method.
-// func (m *MockInvitation) CreateInvitation() (model.Invitation, error) {
-// 	m.ctrl.T.Helper()
-// 	ret := m.ctrl.Call(m, "CreateInvitation")
-// 	ret0, _ := ret[0].(model.Invitation)
-// 	ret1, _ := ret[1].(error)
-// 	return ret0, ret1
-// }
+// CreateInvitation mocks base method.
+func (m *MockInvitation) CreateInvitation() (model.Invitation, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateInvitation")
+	ret0, _ := ret[0].(model.Invitation)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
 
-// // CreateInvitation indicates an expected call of CreateInvitation.
-// func (mr *MockInvitationMockRecorder) CreateInvitation() *gomock.Call {
-// 	mr.mock.ctrl.T.Helper()
-// 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateInvitation", reflect.TypeOf((*MockInvitation)(nil).CreateInvitation))
-// }
+// CreateInvitation indicates an expected call of CreateInvitation.
+func (mr *MockInvitationMockRecorder) CreateInvitation() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateInvitation", reflect.TypeOf((*MockInvitation)(nil).CreateInvitation))
+}
 
-// // DisableInvitation mocks base method.
-// func (m *MockInvitation) DisableInvitation(invitationToken string) error {
-// 	m.ctrl.T.Helper()
-// 	ret := m.ctrl.Call(m, "DisableInvitation", invitationToken)
-// 	ret0, _ := ret[0].(error)
-// 	return ret0
-// }
+// DisableInvitation mocks base method.
+func (m *MockInvitation) DisableInvitation(invitationToken string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DisableInvitation", invitationToken)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
 
-// // DisableInvitation indicates an expected call of DisableInvitation.
-// func (mr *MockInvitationMockRecorder) DisableInvitation(invitationToken interface{}) *gomock.Call {
-// 	mr.mock.ctrl.T.Helper()
-// 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DisableInvitation", reflect.TypeOf((*MockInvitation)(nil).DisableInvitation), invitationToken)
-// }
+// DisableInvitation indicates an expected call of DisableInvitation.
+func (mr *MockInvitationMockRecorder) DisableInvitation(invitationToken interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DisableInvitation", reflect.TypeOf((*MockInvitation)(nil).DisableInvitation), invitationToken)
+}
 
-// // GetInvitations mocks base method.
-// func (m *MockInvitation) GetInvitations() ([]model.Invitation, error) {
-// 	m.ctrl.T.Helper()
-// 	ret := m.ctrl.Call(m, "GetInvitations")
-// 	ret0, _ := ret[0].([]model.Invitation)
-// 	ret1, _ := ret[1].(error)
-// 	return ret0, ret1
-// }
+// GetInvitations mocks base method.
+func (m *MockInvitation) GetInvitations() ([]model.Invitation, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetInvitations")
+	ret0, _ := ret[0].([]model.Invitation)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
 
-// // GetInvitations indicates an expected call of GetInvitations.
-// func (mr *MockInvitationMockRecorder) GetInvitations() *gomock.Call {
-// 	mr.mock.ctrl.T.Helper()
-// 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetInvitations", reflect.TypeOf((*MockInvitation)(nil).GetInvitations))
-// }
+// GetInvitations indicates an expected call of GetInvitations.
+func (mr *MockInvitationMockRecorder) GetInvitations() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetInvitations", reflect.TypeOf((*MockInvitation)(nil).GetInvitations))
+}
