@@ -58,7 +58,7 @@ func (r *RepositoryInMemInvitation) GetInvitationByToken(invitationToken string)
 			return invitation, nil
 		}
 	}
-	return model.Invitation{}, nil
+	return model.Invitation{}, model.Err_Repository_Invitation_InvalidToken
 }
 
 func (r *RepositoryInMemInvitation) UpdateInvitationStatus(invitationToken string, updatedStatus model.InvitationStatus) error {

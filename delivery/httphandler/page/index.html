@@ -18,7 +18,7 @@
             }),
             success: function(res) {
               if (res.data.token === undefined) {
-                alert("invalid invitation id")
+                alert(res.data)
                 return
               }
               $.cookie('token', res.data.token)

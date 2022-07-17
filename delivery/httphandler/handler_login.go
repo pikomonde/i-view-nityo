@@ -1,7 +1,10 @@
 package httphandler
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
+	"time"
 
 	"github.com/pikomonde/i-view-nityo/model"
 	s "github.com/pikomonde/i-view-nityo/service"
@@ -11,6 +14,7 @@ type LoginHandler struct {
 	ServiceLogin s.Login
 	Mux          *http.ServeMux
 	Config       model.Config
+	Clients      map[string]time.Time
 }
 
 func (h *Handler) RegisterLogin() {
@@ -18,6 +22,7 @@ func (h *Handler) RegisterLogin() {
 		ServiceLogin: h.ServiceLogin,
 		Mux:          h.Mux,
 		Config:       h.Config,
+		Clients:      make(map[string]time.Time),
 	}
 
 	hh.Mux.HandleFunc("/api/login", hh.Login)
@@ -52,7 +57,32 @@ func (hh *LoginHandler) Login(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+func (hh *LoginHandler) rateLimiter(w http.ResponseWriter, r *http.Request) bool {
+	ip := r.Header.Get("X-Forwarded-For")
+	if ip == "" {
+		ip = strings.Split(r.RemoteAddr, ":")[0]
+	}
+
+	clientID := fmt.Sprintf("%s::%s", ip, r.UserAgent())
+
+	lastRequest, isExist := hh.Clients[clientID]
+	if isExist {
+		if lastRequest.Add(30 * time.Second).After(time.Now()) {
+			return true
+		}
+	}
+
+	hh.Clients[clientID] = time.Now()
+
+	return false
+}
+
 func (hh *LoginHandler) LoginInvitation(w http.ResponseWriter, r *http.Request) {
+	if isLimited := hh.rateLimiter(w, r); isLimited {
+		respSuccessJSON(w, r, errorTryAgainLater)
+		return
+	}
+
 	var input struct {
 		InvitationToken string `json:"invitation_token"`
 	}

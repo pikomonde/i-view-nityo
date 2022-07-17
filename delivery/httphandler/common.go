@@ -148,4 +148,5 @@ const (
 	errorExpiredJWTToken   = "Expired JWT Token"
 	errorMissingJWTData    = "Missing JWT Data"
 	errorDeformedJWTToken  = "Deformed JWT Token"
+	errorTryAgainLater     = "Try Again In 30 seconds"
 )
