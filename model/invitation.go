@@ -3,15 +3,14 @@ package model
 type InvitationStatus string
 
 const (
-	InvitationStatus_Disabled UserRole = "disabled"
-	InvitationStatus_Inactive UserRole = "inactive"
-	InvitationStatus_Active   UserRole = "active"
+	InvitationStatus_Disabled InvitationStatus = "disabled"
+	InvitationStatus_Inactive InvitationStatus = "inactive"
+	InvitationStatus_Active   InvitationStatus = "active"
 )
 
 type Invitation struct {
-	ID        int64
-	Token     string
-	Status    InvitationStatus
-	CreatedBy int64
-	CreatedAt int64
+	ID        int64            `json:"id"`
+	Token     string           `json:"token"`
+	Status    InvitationStatus `json:"status"`
+	CreatedAt int64            `json:"created_at"`
 }

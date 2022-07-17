@@ -16,10 +16,12 @@ func NewRepositoryInMemUser(ctx context.Context, config model.Config) *Repositor
 type RepositoryInMemUser struct {
 	context context.Context
 	data    map[int64]model.User
+	lastID  int64
 }
 
 func (r *RepositoryInMemUser) CreateUser(user model.User) (model.User, error) {
-	newID := int64(len(r.data))
+	r.lastID++
+	newID := int64(r.lastID)
 	r.data[newID] = model.User{
 		ID:           newID,
 		InvitationID: user.InvitationID,

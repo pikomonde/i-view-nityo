@@ -1,5 +1,7 @@
 package service
 
+import "github.com/pikomonde/i-view-nityo/model"
+
 type Login interface {
 	RegisterAdminIfNotExist() error
 	LoginByUsernamePassword(username, password string) (string, error)
@@ -7,6 +9,7 @@ type Login interface {
 }
 
 type Invitation interface {
-	CreateInvitation(userID int) error
-	GetInvitations() ([]Invitation, error)
+	CreateInvitation() (model.Invitation, error)
+	GetInvitations() ([]model.Invitation, error)
+	DisableInvitation(invitationToken string) error
 }

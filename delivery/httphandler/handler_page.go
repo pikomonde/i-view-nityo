@@ -23,8 +23,13 @@ func (h *Handler) RegisterPage() {
 }
 
 func (hh *PageHandler) Index(w http.ResponseWriter, r *http.Request) {
-	user, _, errStr := parseJWT(w, r, hh.Config.App.JWTSecret)
-	if errStr == "" {
+	if r.Method != "GET" {
+		respErrorJSON(w, r, http.StatusBadRequest, errBadRequest)
+		return
+	}
+
+	user, status, _ := parseJWT(w, r, hh.Config.App.JWTSecret)
+	if status == http.StatusOK {
 		if user.Role == model.UserRole_Admin {
 			respHTML(w, r, "dashboard.html", map[string]interface{}{})
 			return
@@ -39,8 +44,13 @@ func (hh *PageHandler) Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func (hh *PageHandler) Admin(w http.ResponseWriter, r *http.Request) {
-	user, _, errStr := parseJWT(w, r, hh.Config.App.JWTSecret)
-	if errStr == "" {
+	if r.Method != "GET" {
+		respErrorJSON(w, r, http.StatusBadRequest, errBadRequest)
+		return
+	}
+
+	user, status, _ := parseJWT(w, r, hh.Config.App.JWTSecret)
+	if status == http.StatusOK {
 		if user.Role == model.UserRole_Admin {
 			respHTML(w, r, "dashboard.html", map[string]interface{}{})
 			return

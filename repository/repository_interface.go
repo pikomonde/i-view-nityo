@@ -9,5 +9,8 @@ type User interface {
 }
 
 type Invitation interface {
-	CreateInvitation() (model.Invitation, error)
+	CreateInvitation(invitation model.Invitation) (model.Invitation, error)
+	IsInvitationExist(invitationToken string) (bool, error)
+	GetInvitations() ([]model.Invitation, error)
+	DisableInvitation(invitationToken string) error
 }

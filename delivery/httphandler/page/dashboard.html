@@ -4,6 +4,75 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
+      function onDOMLoad() {
+        $.ajax({
+          type: "GET",
+          url: "/api/invitation/list",
+          success: function(res) {
+            console.log("invitation_list", res)
+
+            var invitations = res.data.invitations
+
+            for (var i = 0; i < invitations.length; i++) {
+              var invitation = invitations[i]
+
+              var invitationTokenEl = document.createElement("input");
+              invitationTokenEl.setAttribute("type", "text")
+              invitationTokenEl.setAttribute("value", invitation.token)
+              invitationTokenEl.setAttribute("disabled", "true")
+
+              var invitationStatusEl = document.createElement("label");
+              var status = invitation.status
+              var nowMin7Days = (Date.now() - 7*24*60*60*1000) * 1000000
+              if (invitation.created_at < nowMin7Days) {
+                status = "expired"
+              }
+              invitationStatusEl.innerText = status
+
+              var invitationButtonDisableEl = document.createElement("input");
+              invitationButtonDisableEl.setAttribute("type", "button")
+              invitationButtonDisableEl.setAttribute("value", "disable")
+              if ((status=="disabled") || (status=="expired")) {
+                invitationButtonDisableEl.setAttribute("disabled", "true")
+              }
+              invitationButtonDisableEl.setAttribute("onclick", "disableInvitation(\""+invitation.token+"\")")
+
+              var invitationEl = document.createElement("div");
+              invitationEl.setAttribute("class", "div-input")
+              invitationEl.appendChild(invitationTokenEl)
+              invitationEl.appendChild(invitationStatusEl)
+              invitationEl.appendChild(invitationButtonDisableEl)
+
+              document.getElementById("invitations").appendChild(invitationEl)
+
+            }
+          }
+        });
+      }
+
+      function disableInvitation(invitation_token) {
+        $.ajax({
+          type: "POST",
+          url: "/api/invitation/disable",
+          data: JSON.stringify({
+            "invitation_token": invitation_token
+          }),
+          success: function(res) {
+            location.reload()
+          }
+        });
+      }
+
+      function createInvitation() {
+        $.ajax({
+          type: "POST",
+          url: "/api/invitation/create",
+          success: function(res) {
+            location.reload()
+          }
+        });
+      }
+
       function onLogout() {
         $.removeCookie("token")
         location.reload()
@@ -24,12 +93,17 @@
     <p><b>Dashboard</b></p>
     <div class="div-input-parent">
       <div class="div-input">
-        <input type="button" value="Create New Invitation ID"/>
+        <input type="button" onclick="createInvitation()" value="Create New Invitation ID"/>
       </div>
-      <div class="div-input">
-        <input type="text" id="invitation_token" value="asdasdasd" disabled/>
+      <div id="invitations" class="div-input-parent">
+        <!-- <div class="div-input">
+          <input type="text" disabled/>
+          <label>ASD</label>
+          <input type="button" value="disable"/>
+        </div> -->
       </div>
-    </form>
+    </div>
     <p><input type="button" onclick="onLogout()" value="logout"></p>
   </body>
+  <script>onDOMLoad()</script>
 </html>

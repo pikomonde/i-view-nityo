@@ -2,7 +2,10 @@ package service
 
 import (
 	"context"
+	"math/rand"
+	"time"
 
+	"github.com/pikomonde/i-view-nityo/helper"
 	"github.com/pikomonde/i-view-nityo/model"
 	r "github.com/pikomonde/i-view-nityo/repository"
 )
@@ -28,10 +31,37 @@ type ServiceInvitation struct {
 	repositoryInvitation r.Invitation
 }
 
-func (s *ServiceInvitation) CreateInvitation(userID int) error {
-	return nil
+func (s *ServiceInvitation) CreateInvitation() (model.Invitation, error) {
+	rnd := rand.NewSource(time.Now().UnixNano())
+	token := ""
+	for {
+		digit := 6 + rnd.Int63()%7 // 6-12
+		token = helper.RandomString(int(digit))
+		isExist, err := s.repositoryInvitation.IsInvitationExist(token)
+		if err != nil {
+			return model.Invitation{}, err
+		}
+
+		if !isExist {
+			break
+		}
+	}
+
+	invitation := model.Invitation{
+		Token:     token,
+		Status:    model.InvitationStatus_Inactive,
+		CreatedAt: time.Now().UnixNano(),
+	}
+
+	createdInvitation, err := s.repositoryInvitation.CreateInvitation(invitation)
+
+	return createdInvitation, err
 }
 
-func (s *ServiceInvitation) GetInvitations() ([]Invitation, error) {
-	return nil, nil
+func (s *ServiceInvitation) GetInvitations() ([]model.Invitation, error) {
+	return s.repositoryInvitation.GetInvitations()
+}
+
+func (s *ServiceInvitation) DisableInvitation(invitationToken string) error {
+	return s.repositoryInvitation.DisableInvitation(invitationToken)
 }

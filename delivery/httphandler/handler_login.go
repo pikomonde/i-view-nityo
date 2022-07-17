@@ -21,7 +21,7 @@ func (h *Handler) RegisterLogin() {
 	}
 
 	hh.Mux.HandleFunc("/api/login", hh.Login)
-	// hh.Mux.HandleFunc("/api/login", hh.Login)
+	// hh.Mux.HandleFunc("/api/login-invitation", hh.Login)
 }
 
 func (hh *LoginHandler) Login(w http.ResponseWriter, r *http.Request) {
@@ -32,6 +32,7 @@ func (hh *LoginHandler) Login(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method != "POST" {
 		respErrorJSON(w, r, http.StatusBadRequest, errBadRequest)
+		return
 	}
 
 	parseInput(w, r, &input)
@@ -41,6 +42,11 @@ func (hh *LoginHandler) Login(w http.ResponseWriter, r *http.Request) {
 		respSuccessJSON(w, r, err.Error())
 		return
 	}
+
+	http.SetCookie(w, &http.Cookie{
+		Name:  "token",
+		Value: token,
+	})
 	respSuccessJSON(w, r, map[string]interface{}{
 		"token": token,
 	})

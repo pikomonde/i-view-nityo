@@ -34,7 +34,7 @@ type ServiceLogin struct {
 }
 
 func (s *ServiceLogin) RegisterAdminIfNotExist() error {
-	if _, err := s.repositoryUser.GetUserByID(0); err != model.Err_Repository_User_NotFound {
+	if _, err := s.repositoryUser.GetUserByID(1); err != model.Err_Repository_User_NotFound {
 		// already exist
 		return nil
 	}

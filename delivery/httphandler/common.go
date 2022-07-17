@@ -121,7 +121,7 @@ func parseJWT(w http.ResponseWriter, r *http.Request, jwtSecret string) (model.U
 		return model.User{}, http.StatusUnauthorized, errorDeformedJWTToken
 	}
 
-	return user, 200, ""
+	return user, http.StatusOK, ""
 }
 
 func parseInput(w http.ResponseWriter, r *http.Request, v interface{}) {
