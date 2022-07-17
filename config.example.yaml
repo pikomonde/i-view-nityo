@@ -4,6 +4,7 @@ app:
   port: 5001
   read_timeout: 5000
   write_timeout: 5000
+  jwt_secret: "some_jwt_secret"
 mysql:
   host: "localhost"
   port: 3306

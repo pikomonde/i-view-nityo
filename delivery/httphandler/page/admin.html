@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .div-input-parent {
+        width: 320px
+      }
+      .div-input {
+        display: flex;
+        justify-content: space-between;
+        margin: .5rem;
+      }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+      function onDOMLoad() {
+        document.getElementById("formSubmit").addEventListener("submit", function(event){
+          event.preventDefault()
+
+          let username = document.getElementById("username").value;
+          let password = document.getElementById("password").value;
+
+          $.ajax({
+            type: "POST",
+            url: "/api/login",
+            data: JSON.stringify({
+              "username": username,
+              "password": password
+            }),
+            success: function(res) {
+              if (res.data.token === undefined) {
+                alert("wrong username/password")
+                return
+              }
+              $.cookie('token', res.data.token)
+              location.reload()
+            }
+          });
+          
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <p><b>Admin Login</b></p>
+    <form id="formSubmit" class="div-input-parent">
+      <div class="div-input">
+        <label for="username">Username</label>
+        <input type="username" id="username" name="username"/>
+      </div>
+      <div class="div-input">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password"/>
+      </div>
+      <div class="div-input">
+        <input type="submit" value="Login as Admin"/>
+      </div>
+    </form>
+    <p><a href="/">login with invitation id</a></p>
+  </body>
+  <script>onDOMLoad()</script>
+</html>

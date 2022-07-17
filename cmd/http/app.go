@@ -38,6 +38,9 @@ func main() {
 
 	// Delivery
 	delv := d.New(ctx, config, serviceLogin, serviceInvitation)
+	if err := serviceLogin.RegisterAdminIfNotExist(); err != nil {
+		panic(err)
+	}
 	delv.Start()
 
 	term := make(chan os.Signal)

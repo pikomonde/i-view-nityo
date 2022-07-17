@@ -35,7 +35,9 @@ func New(
 
 // Start http server
 func (h *Handler) Start() {
+	h.RegisterPage()
 	h.RegisterLogin()
+	h.RegisterInvitation()
 
 	// Starting server
 	port := fmt.Sprintf(":%d", h.Config.App.Port)

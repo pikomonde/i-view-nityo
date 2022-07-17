@@ -26,6 +26,7 @@ type AppConfig struct {
 	Port         int    `json:"port" mapstructure:"port"`
 	ReadTimeout  int    `json:"read_timeout" mapstructure:"read_timeout"`
 	WriteTimeout int    `json:"write_timeout" mapstructure:"write_timeout"`
+	JWTSecret    string `json:"jwt_secret" mapstructure:"jwt_secret"`
 }
 
 type MySQLConfig struct {

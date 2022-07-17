@@ -31,3 +31,7 @@ type ServiceInvitation struct {
 func (s *ServiceInvitation) CreateInvitation(userID int) error {
 	return nil
 }
+
+func (s *ServiceInvitation) GetInvitations() ([]Invitation, error) {
+	return nil, nil
+}

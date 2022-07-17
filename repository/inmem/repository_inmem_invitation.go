@@ -14,6 +14,7 @@ func NewRepositoryInMemInvitation(ctx context.Context, config model.Config) *Rep
 
 type RepositoryInMemInvitation struct {
 	context context.Context
+	data    map[string]model.Invitation
 }
 
 func (r *RepositoryInMemInvitation) CreateInvitation() (invitation model.Invitation, err error) {
