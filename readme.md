@@ -30,10 +30,12 @@ You might want to run the service in your local machine. This backend service ru
       port: 3306
       username: "root"
       password: "password"
-      db_name: "database_name"
+      db_name: "catalyst_experience"
     ```
    
 2. Init MySQL
+
+    You can skip this if you are using `IN_MEMORY` `db_type`.
 
     `mysql -h localhost -u root -p < ./setup/deploy_00.00.001_init_schema.sql`
 
@@ -56,7 +58,7 @@ You might want to run the service in your local machine. This backend service ru
 
 ## Testing
 
-You can run **unit testing** using GoMock by running `make test`. Currently, the unit test only cover package `helper` and `service`.
+You can run **unit testing** using GoMock by running `make test`. Currently, the unit test only cover package `helper` and `service`. It will also give coverage report of the project.
 
 Currently there is no **integration testing** yet on this project.
 

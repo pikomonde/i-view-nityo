@@ -9,7 +9,10 @@ import (
 
 	"github.com/pikomonde/i-view-nityo/cmd/initialize"
 	d "github.com/pikomonde/i-view-nityo/delivery"
+	"github.com/pikomonde/i-view-nityo/model"
+
 	rInmem "github.com/pikomonde/i-view-nityo/repository/inmem"
+	rMySql "github.com/pikomonde/i-view-nityo/repository/mysql"
 	s "github.com/pikomonde/i-view-nityo/service"
 	log "github.com/sirupsen/logrus"
 )
@@ -26,15 +29,25 @@ func main() {
 	}
 
 	// Initialization
-	// init db
+	mySQLCli, err := initialize.NewMySQL(config.MySQL)
+	if err != nil {
+		logger.WithField("err", err).Errorln("Failed to connect mysql")
+		return
+	}
 
 	// Repository
-	repositoryUser := rInmem.NewRepositoryInMemUser(ctx, config)
-	repositoryInvitation := rInmem.NewRepositoryInMemInvitation(ctx, config)
+	repositoryInMemUser := rInmem.NewRepositoryInMemUser(ctx, config)
+	repositoryInMemInvitation := rInmem.NewRepositoryInMemInvitation(ctx, config)
+	repositoryMySQLUser := rMySql.NewRepositoryInMemUser(ctx, config, mySQLCli)
+	repositoryMySQLInvitation := rMySql.NewRepositoryInMemInvitation(ctx, config, mySQLCli)
 
 	// Service
-	serviceLogin := s.NewServiceLogin(ctx, config, repositoryUser, repositoryInvitation)
-	serviceInvitation := s.NewServiceInvitation(ctx, config, repositoryUser, repositoryInvitation)
+	serviceLogin := s.NewServiceLogin(ctx, config, repositoryInMemUser, repositoryInMemInvitation)
+	serviceInvitation := s.NewServiceInvitation(ctx, config, repositoryInMemUser, repositoryInMemInvitation)
+	if config.App.DBType == model.DBType_MySQL {
+		serviceLogin = s.NewServiceLogin(ctx, config, repositoryMySQLUser, repositoryMySQLInvitation)
+		serviceInvitation = s.NewServiceInvitation(ctx, config, repositoryMySQLUser, repositoryMySQLInvitation)
+	}
 
 	// Delivery
 	delv := d.New(ctx, config, serviceLogin, serviceInvitation)

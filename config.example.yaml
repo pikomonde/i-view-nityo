@@ -10,4 +10,4 @@ mysql:
   port: 3306
   username: "root"
   password: "password"
-  db_name: "database_name"
+  db_name: "catalyst_experience"
