@@ -69,5 +69,5 @@ func (r *RepositoryInMemInvitation) UpdateInvitationStatus(invitationToken strin
 			return nil
 		}
 	}
-	return nil
+	return model.Err_Repository_Invitation_InvalidToken
 }
