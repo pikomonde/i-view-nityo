@@ -3,6 +3,32 @@
   <head>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+      function onDOMLoad() {
+        document.getElementById("formSubmit").addEventListener("submit", function(event){
+          event.preventDefault()
+
+          let invitation_token = document.getElementById("invitation_token").value;
+
+          $.ajax({
+            type: "POST",
+            url: "/api/login-invitation",
+            data: JSON.stringify({
+              "invitation_token": invitation_token
+            }),
+            success: function(res) {
+              if (res.data.token === undefined) {
+                alert("invalid invitation id")
+                return
+              }
+              $.cookie('token', res.data.token)
+              location.reload()
+            }
+          });
+          
+        });
+      }
+    </script>
     <style>
       .div-input-parent {
         width: 320px
@@ -16,10 +42,10 @@
   </head>
   <body>
     <p><b>Catalyst Experience App</b></p>
-    <form class="div-input-parent">
+    <form id="formSubmit" class="div-input-parent">
       <div class="div-input">
-        <label for="invitation_id">Invitation ID</label>
-        <input type="text" id="invitation_id" name="invitation_id"/>
+        <label for="invitation_token">Invitation ID</label>
+        <input type="text" id="invitation_token" name="invitation_token"/>
       </div>
       <div class="div-input">
         <input type="submit" value="Login with Invitation ID"/>
@@ -27,4 +53,5 @@
     </form>
     <p><a href="admin">login as admin</a></p>
   </body>
+  <script>onDOMLoad()</script>
 </html>

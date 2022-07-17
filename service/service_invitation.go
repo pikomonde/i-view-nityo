@@ -63,5 +63,5 @@ func (s *ServiceInvitation) GetInvitations() ([]model.Invitation, error) {
 }
 
 func (s *ServiceInvitation) DisableInvitation(invitationToken string) error {
-	return s.repositoryInvitation.DisableInvitation(invitationToken)
+	return s.repositoryInvitation.UpdateInvitationStatus(invitationToken, model.InvitationStatus_Disabled)
 }

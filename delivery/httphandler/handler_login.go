@@ -21,7 +21,7 @@ func (h *Handler) RegisterLogin() {
 	}
 
 	hh.Mux.HandleFunc("/api/login", hh.Login)
-	// hh.Mux.HandleFunc("/api/login-invitation", hh.Login)
+	hh.Mux.HandleFunc("/api/login-invitation", hh.LoginInvitation)
 }
 
 func (hh *LoginHandler) Login(w http.ResponseWriter, r *http.Request) {
@@ -38,6 +38,33 @@ func (hh *LoginHandler) Login(w http.ResponseWriter, r *http.Request) {
 	parseInput(w, r, &input)
 
 	token, err := hh.ServiceLogin.LoginByUsernamePassword(input.Username, input.Password)
+	if err != nil {
+		respSuccessJSON(w, r, err.Error())
+		return
+	}
+
+	http.SetCookie(w, &http.Cookie{
+		Name:  "token",
+		Value: token,
+	})
+	respSuccessJSON(w, r, map[string]interface{}{
+		"token": token,
+	})
+}
+
+func (hh *LoginHandler) LoginInvitation(w http.ResponseWriter, r *http.Request) {
+	var input struct {
+		InvitationToken string `json:"invitation_token"`
+	}
+
+	if r.Method != "POST" {
+		respErrorJSON(w, r, http.StatusBadRequest, errBadRequest)
+		return
+	}
+
+	parseInput(w, r, &input)
+
+	token, err := hh.ServiceLogin.LoginByInvitationToken(input.InvitationToken)
 	if err != nil {
 		respSuccessJSON(w, r, err.Error())
 		return

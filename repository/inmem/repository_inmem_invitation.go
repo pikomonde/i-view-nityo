@@ -52,10 +52,19 @@ func (r *RepositoryInMemInvitation) GetInvitations() ([]model.Invitation, error)
 	return invitations, nil
 }
 
-func (r *RepositoryInMemInvitation) DisableInvitation(invitationToken string) error {
+func (r *RepositoryInMemInvitation) GetInvitationByToken(invitationToken string) (model.Invitation, error) {
 	for _, invitation := range r.data {
 		if invitation.Token == invitationToken {
-			invitation.Status = model.InvitationStatus_Disabled
+			return invitation, nil
+		}
+	}
+	return model.Invitation{}, nil
+}
+
+func (r *RepositoryInMemInvitation) UpdateInvitationStatus(invitationToken string, updatedStatus model.InvitationStatus) error {
+	for _, invitation := range r.data {
+		if invitation.Token == invitationToken {
+			invitation.Status = updatedStatus
 			r.data[invitation.ID] = invitation
 			return nil
 		}

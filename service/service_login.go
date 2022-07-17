@@ -103,6 +103,42 @@ func (s *ServiceLogin) LoginByUsernamePassword(username, password string) (strin
 	return token, nil
 }
 
-func (s *ServiceLogin) LoginByInvitationToken(invitationToken string) error {
-	return nil
+func (s *ServiceLogin) LoginByInvitationToken(invitationToken string) (string, error) {
+	invitation, err := s.repositoryInvitation.GetInvitationByToken(invitationToken)
+	if err != nil {
+		return "", err
+	}
+
+	// validate expiration
+	if time.Now().UnixNano() > (invitation.CreatedAt + 7*24*time.Hour.Nanoseconds()) {
+		return "", model.Err_Service_Login_ExpiredInvitationToken
+	}
+
+	// validate status
+	if invitation.Status == model.InvitationStatus_Disabled {
+		return "", model.Err_Service_Login_DisabledInvitationToken
+	}
+
+	// hashing user data for jwt
+	userStr, err := json.Marshal(model.User{
+		InvitationToken: invitation.Token,
+		Role:            model.UserRole_Invitation,
+	})
+	if err != nil {
+		return "", err
+	}
+
+	sign := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"data": string(userStr),
+		"exp":  time.Now().Add(24 * time.Hour).Unix(),
+	})
+	token, err := sign.SignedString([]byte(s.config.App.JWTSecret))
+	if err != nil {
+		return "", err
+	}
+
+	// update invitation status
+	s.repositoryInvitation.UpdateInvitationStatus(invitationToken, model.InvitationStatus_Active)
+
+	return token, nil
 }

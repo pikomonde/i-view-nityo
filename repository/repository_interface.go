@@ -12,5 +12,6 @@ type Invitation interface {
 	CreateInvitation(invitation model.Invitation) (model.Invitation, error)
 	IsInvitationExist(invitationToken string) (bool, error)
 	GetInvitations() ([]model.Invitation, error)
-	DisableInvitation(invitationToken string) error
+	GetInvitationByToken(invitationToken string) (model.Invitation, error)
+	UpdateInvitationStatus(invitationToken string, updatedStatus model.InvitationStatus) error
 }

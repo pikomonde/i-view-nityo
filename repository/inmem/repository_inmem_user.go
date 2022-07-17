@@ -23,12 +23,11 @@ func (r *RepositoryInMemUser) CreateUser(user model.User) (model.User, error) {
 	r.lastID++
 	newID := int64(r.lastID)
 	r.data[newID] = model.User{
-		ID:           newID,
-		InvitationID: user.InvitationID,
-		Username:     user.Username,
-		Password:     user.Password,
-		Role:         user.Role,
-		CreatedAt:    user.CreatedAt,
+		ID:        newID,
+		Username:  user.Username,
+		Password:  user.Password,
+		Role:      user.Role,
+		CreatedAt: user.CreatedAt,
 	}
 	return r.data[newID], nil
 }
